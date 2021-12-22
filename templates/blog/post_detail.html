@@ -55,20 +55,19 @@
               <div class="comment">
                 <div class="comment-header d-flex justify-content-between">
                   <div class="user d-flex align-items-center">
-                    <div class="image"><img src="{{ comment.user.picture.url }}" alt="..."
-                        class="img-fluid rounded-circle"></div>
-                    <div class="title"><strong>{{ comment.user.username }}</strong>
+                    <div class="image"><img src="{{ comment.user.picture.url }}" alt="..." class="img-fluid rounded-circle"></div>
+                    <div class="title"><strong>{{ comment.user }}</strong>
                       <span class="date">{{ comment.timestamp|timesince }}</span>
                     </div>
                     {% if user.is_staff or user|has_group:"Blog Admin" %}
                     <div class="ml-5 d-flex flex-end">
-                      <a href="{{ post.get_delete_url }}" class="btn btn-danger">Borrar</a>
+                      <a href="{{ comment.get_delete_comment }}" class="btn btn-danger">Borrar</a>
                     </div>
                     {% endif %}
                   </div>
                 </div>
                 <div class="comment-body">
-                  <p> {{ comment.content|safe }}</p>
+                  <p>{{ comment.content|safe }}</p>
                 </div>
               </div>
               {% endfor %}
@@ -112,7 +111,7 @@
         </header>
         <div class="blog-posts">
           {% for post in latest_posts %}
-          {% if post.featured or post.author == user.author %}
+          {% if post.featured %}
           <a href="#">
             <div class="item d-flex align-items-center">
               <div class="image"><img src="{{ post.thumbnail.url }}" alt="..." class="img-fluid"></div>
