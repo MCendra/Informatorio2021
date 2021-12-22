@@ -39,3 +39,16 @@ Dependencias:
     pip install Pillow
     pip install celery
 
+# Uso
+
+Si las dependencias estan correctas no hace falta migrar cambios a la base de datos.
+
+Ejecutar:
+ python manage.py runserver 127.0.0.1:8000
+
+ Datos de acceso:
+ 
+ Cuenta Propietario contraseña informatorio (Perfil de superusuario)
+ Cuenta Mariano contraseña informatorio (Perfil de Blog Admin)
+ Cuenta Alejandro contraseña informatorio (Perfil de Writer)
+ Cuenta Usuario contraseña informatorio (Perfil de Reader)
