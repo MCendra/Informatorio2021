@@ -1,0 +1,18 @@
+{% extends '../blog/base.html' %}
+{% load static i18n %}
+{% block content %}
+<meta http-equiv="REFRESH" content="5;url={% url 'index' %}">
+<section>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <h2 class="h3"><em>Ups! La página que buscas no se encuentra.</em></h2>
+          <div class="blockquote">
+            <blockquote>Presiona <a href="{% url 'index'%}">aquí</a> para ir a nuestra página principal.</blockquote>
+            <footer class="blockquote-footer"> O espera... y te llevamos!</footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

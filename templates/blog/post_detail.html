@@ -1,0 +1,145 @@
+{% extends './base.html' %}
+{% load static i18n crispy_forms_tags groups %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <!-- Ultimo Posts -->
+    <main class="post blog-post col-lg-8">
+      <div class="container">
+        <div class="post-single">
+          <div class="post-thumbnail"><img src="{{ post.thumbnail.url }}" alt="..." class="img-fluid"></div>
+          <div class="post-details">
+            <div class="post-meta d-flex justify-content-between">
+              <div class="category">
+                {% for category in post.category.all %}
+                <a href="#">{{ category.title }}</a>
+                {% endfor %}
+              </div>
+            </div>
+            <h1 id="post-title" >{{ post.title }}<a href="#"><i class="fa fa-bookmark-o"></i></a>
+            </h1>
+            {% if user.is_authenticated %}
+            {% if post.featured == False %}
+            {% if user.is_staff or user|has_group:"Blog Admin" or post.author == user.author %}
+            <div>NO PUBLICADO</div>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="#"
+                class="author d-flex align-items-center flex-wrap">
+                <div class="avatar"><img src="{{ post.author.picture.url }}" alt="..." class="img-fluid"></div>
+                <div class="title"><span>{{ post.author }}</span></div>
+              </a>
+              <div class="d-flex align-items-center flex-wrap">
+                <div class="date"><i class="icon-clock"></i>{{ post.timestamp|timesince }}</div>
+                <div class="views"><i class="icon-eye"></i> 500</div>
+                <div class="comments meta-last"><i class="icon-comment"></i>{{ post.comments.count }}</div>
+              </div>
+              {% if user.is_staff or user|has_group:"Blog Admin" or request.user.author == post.author %}
+              <div class="ml-5 d-flex flex-end">
+                <a href="{{ post.get_update_url }}" class="btn btn-secondary">Actualizar</a>
+                <a href="{{ post.get_delete_url }}" class="btn btn-danger">Borrar</a>
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="post-body">
+              {{ post.content|safe }}
+            </div>
+
+            <div class="post-comments">
+              <header>
+                <h3 class="h6">Comentarios<span class="no-of-comments">( {{post.comments.count}} )</span></h3>
+              </header>
+              {% for comment in post.comments.all %}
+              <div class="comment">
+                <div class="comment-header d-flex justify-content-between">
+                  <div class="user d-flex align-items-center">
+                    <div class="image"><img src="{{ comment.user.picture.url }}" alt="..."
+                        class="img-fluid rounded-circle"></div>
+                    <div class="title"><strong>{{ comment.user.username }}</strong>
+                      <span class="date">{{ comment.timestamp|timesince }}</span>
+                    </div>
+                    {% if user.is_staff or user|has_group:"Blog Admin" %}
+                    <div class="ml-5 d-flex flex-end">
+                      <a href="{{ post.get_delete_url }}" class="btn btn-danger">Borrar</a>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="comment-body">
+                  <p> {{ comment.content|safe }}</p>
+                </div>
+              </div>
+              {% endfor %}
+              <div class="add-comment" id="add-comment" >
+                <header>
+                  <h3 class="h6">Dejá un comentario</h3>
+                </header>
+                {% if user.is_authenticated %}
+                <form action="{% url 'post_detail' post.slug %}" method="POST" class="commenting-form">
+                  {% csrf_token %}
+                  {{ comment_form|crispy }}
+                  <div class="form-group col-md-12">
+                    <button type="submit" class="btn btn-outline-secondary">Enviar</button>
+                  </div>
+                </form>
+                {% else %}
+                <a href="/accounts/login?next={{ post.get_absolute_url }}#add-comment">Ingresar</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+    </main>
+    <aside class="col-lg-4">
+      <!-- Widget [Search Bar Widget]-->
+      <div class="widget search">
+        <header>
+          <h3 class="h6">Buscar en el Blog</h3>
+        </header>
+        <form action="{% url 'search' %}" class="search-form">
+          <div class="form-group">
+            <input type="search" placeholder="¿Qué es lo que estas buscando?" name="q">
+            <button type="submit" class="submit"><i class="icon-search"></i></button>
+          </div>
+        </form>
+      </div>
+      <!-- Widget [Latest Posts Widget]        -->
+      <div class="widget latest-posts">
+        <header>
+          <h3 class="h6">Últimas entradas</h3>
+        </header>
+        <div class="blog-posts">
+          {% for post in latest_posts %}
+          {% if post.featured or post.author == user.author %}
+          <a href="#">
+            <div class="item d-flex align-items-center">
+              <div class="image"><img src="{{ post.thumbnail.url }}" alt="..." class="img-fluid"></div>
+              <div class="title"><strong>{{ post.title }}</strong>
+                <div class="d-flex align-items-center">
+                  <div class="views"><i class="icon-eye"></i> 500 </div>
+                  <div class="comments"><i class="icon-comment"></i>{{ post.comments.count }}</div>
+                </div>
+              </div>
+            </div>
+          </a>
+          {% endif %}
+          {% endfor %}
+        </div>
+      <!-- Widget [Categorias Widget]-->
+      <div class="widget categorias">
+        <header>
+          <h3 class="h6">Categorias</h3>
+        </header>
+        {% for category in categories %}
+        <div class="item d-flex justify-content-between">
+          <a href="#">{{ category.title }}</a><span>{{ category.post.count }}</span>
+        </div>
+        {% endfor %}
+      </div>
+      <!-- Widget [Tags Cloud Widget]-->
+    </aside>
+  </div>
+</div>
+{% endblock content %}

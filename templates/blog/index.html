@@ -1,0 +1,213 @@
+{% extends './base.html' %}
+{% load static i18n %}
+{% block content %}
+<!-- Hero Section-->
+<section style="background: url({% static 'blog/img/Background.png' %}); background-repeat: no-repeat; background-size: auto 80%; background-position: center center" class="hero">
+  <div class="container" style="color:#379392">
+    <div class="row">
+      <div class="col-lg-7">
+        <h1>METAS</h1><br><br><br><a href=".gdlr-core-fluid-video-wrapper" class="continue link-scroll" style="color:#379392">SABER MÁS</a>
+      </div>
+    </div><a href=".featured-posts" class="continue link-scroll"><i class="fa fa-long-arrow-down"></i>CONTINUAR</a>
+  </div>
+</section>
+<!-- Intro -->
+<section class="intro">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <h2 class="h3"><em>17 Objetivos para transformar nuestro mundo</em></h2>
+        <div class="blockquote">
+          <blockquote>En 2015, la ONU aprobó la Agenda 2030 sobre el Desarrollo Sostenible, una oportunidad para que los países 
+            y sus sociedades emprendan un nuevo camino con el que mejorar la vida de todos, sin dejar a nadie atrás. La Agenda 
+            cuenta con 17 Objetivos de Desarrollo Sostenible, que incluyen desde la eliminación de la pobreza hasta el combate 
+            al cambio climático, la educación, la igualdad de la mujer, la defensa del medio ambiente o el diseño de nuestras ciudades.</blockquote>
+          <footer class="blockquote-footer">En nosotros queda ayudar a que se cumplan</footer>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% if user.is_authenticated %}
+<!-- Posts No Pulicado -->
+<section class="latest-posts">
+  <div class="container">
+    <header>
+      <h2>Bienvenido {{ user.username }} </h2>
+      {% if nofeatured_posts %}
+      <h4>Tenes entradas sin publicar</h4>
+      {% endif %}
+    </header>
+    {% if nofeatured_posts %}
+    <div class="row">
+      {% for post in nofeatured_posts %}
+      <div class="post col-md-4">
+          <div class="post-meta d-flex justify-content-between">
+            <div class="date">{{ post.timestamp }}</div>
+          </div>
+          <a href="{{ post.get_absolute_url }}"><h3 class="h4">{{ post.title }}</h3></a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</section>
+{% endif %}
+<!-- Post Publicados -->
+<section class="featured-posts no-padding-top">
+  <div class="container">
+    {% for post in featured_posts %}
+    <div class="row d-flex align-items-stretch">
+      {% if not forloop.first and not forloop.last %}
+      <div class="image col-lg-5"><img src="{{ post.thumbnail.url }}" alt="..."></div>
+      {% endif %}
+      <div class="text col-lg-7">
+        <div class="text-inner d-flex align-items-center">
+          <div class="content">
+            <header class="post-header">
+              <div class="category">
+                {% for category in post.category.all %}
+                <a href="#">{{ category }}</a>
+                {% endfor %}
+              </div><a href="{{ post.get_absolute_url }}">
+                <h2 class="h4">{{ post.title }}</h2>
+              </a>
+            </header>
+            <p>{{ post.overview|linebreaks|truncatewords:50 }}</p>
+            <footer class="post-footer d-flex align-items-center"><a href="#"
+                class="author d-flex align-items-center flex-wrap">
+                <div class="avatar"><img src="{{ post.author.picture.url }}" alt="..." class="img-fluid"></div>
+                <div class="title"><span>{{ post.author }}</span></div>
+              </a>
+              <div class="date"><i class="icon-clock"></i>{{ post.timestamp|timesince }}</div>
+              <div class="comments"><i class="icon-comment"></i>{{ post.comment.count }}</div>
+            </footer>
+          </div>
+        </div>
+      </div>
+      {% if forloop.first or forloop.last %}
+      <div class="image col-lg-5"><img src="{{ post.thumbnail.url }}" alt="..."></div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+<!-- Section Divisoria -->
+<section
+  style="background: url({% static 'blog/img/Malala.png' %}); background-size: cover; background-position: center bottom"
+  class="divider">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7">
+        <div class="blockquote">
+          <blockquote class="h2">Vivimos como una familia de naciones, 
+            es necesario que cada miembro de esta familia reciba 
+            oportunidades iguales de crecimiento económico, social y educacional.</blockquote>
+          <blockquote class="blockquote-footer">Malala Yousafzai - Premio Nobel de la Paz 2014</blockquote>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="divider">
+  <div class="gdlr-core-fluid-video-wrapper">
+    <iframe style="display: block; margin-left: auto; margin-right: auto;" width="1024" height="720" title="Los Objetivos de Desarrollo Sostenible - qué son y cómo alcanzarlos" src="https://www.youtube.com/embed/MCKH5xk8X-g?feature=oembed&amp;enablejsapi=1&amp;origin=https://www.slowfashionnext.com" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" id="gdlr-video-893658"></iframe>
+  </div>
+</section>
+<!-- Ultimos Posts -->
+<section class="latest-posts">
+  <div class="container">
+    <header>
+      <h2>Ultimas entradas</h2>
+    </header>
+    <div class="row">
+      {% for post in latest_posts %}
+      {% if post.featured %}
+      <div class="post col-md-4">
+        <div class="post-thumbnail"><a href="{{ post.get_absolute_url }}"><img src="{{ post.thumbnail.url }}"
+              class="img-fluid"></a>
+        </div>
+        <div class="post-details">
+          <div class="post-meta d-flex justify-content-between">
+            <div class="date">{{ post.timestamp }}</div>
+            <div class="category">{% for category in post.category.all %}
+              <a href="#">{{ category.title }}</a>
+              {% endfor %}</div>
+          </div><a href="{{ post.get_absolute_url }}">
+            <h3 class="h4">{{ post.title }}</h3>
+            {% if post.featured == False %}
+            <div>NO PUBLICADO</div>
+            {% endif %}
+          </a>
+          <p class="text-muted">{{ post.overview|linebreaks|truncatewords:50 }}</p>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- Seccion Noticias -->
+<section class="noticia no-padding-top">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Suscríbete a nuestras noticias</h2>
+        <p class="text-big">Al suscribirse a nuestros boletines de noticias das tu concentimiento para que te informemos periódicamente de nuevas noticias o temas relevantes
+          mediante el envío de un correo electrónico a tu casilla de e-mail.</p>
+      </div>
+      <div class="col-md-8">
+        <div class="form-holder">
+          <form action="{% url 'index' %}" method="POST">
+            <div class="form-group">
+              {% csrf_token %}
+              <input type="email" name="email" id="email" placeholder="Ingrese su dirección de correo electrónico" minlength="8">
+              <input type="submit" class="submit" value="Suscribirme">
+            </div>
+          </form>
+          {% if messages %}
+          <div class="row">
+            <div class="col-md-8">
+              {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} fade show" role="alert">
+                <p>{{ message }}</p>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Galeria -->
+<section class="gallery no-padding">
+  <div class="row">
+    <div class="mix col-lg-3 col-md-3 col-sm-6">
+      <div class="item"><a href="{% static 'blog/img/gallery-1.jpg' %}" data-fancybox="gallery" class="image"><img
+            src="{% static 'blog/img/gallery-1.jpg' %}" alt="..." class="img-fluid">
+          <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
+        </a></div>
+    </div>
+    <div class="mix col-lg-3 col-md-3 col-sm-6">
+      <div class="item"><a href="{% static 'blog/img/gallery-2.jpg' %}" data-fancybox="gallery" class="image"><img
+            src="{% static 'blog/img/gallery-2.jpg' %}" alt="..." class="img-fluid">
+          <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
+        </a></div>
+    </div>
+    <div class="mix col-lg-3 col-md-3 col-sm-6">
+      <div class="item"><a href="{% static 'blog/img/gallery-3.jpg' %}" data-fancybox="gallery" class="image"><img
+            src="{% static 'blog/img/gallery-3.jpg' %}" alt="..." class="img-fluid">
+          <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
+        </a></div>
+    </div>
+    <div class="mix col-lg-3 col-md-3 col-sm-6">
+      <div class="item"><a href="{% static 'blog/img/gallery-4.jpg' %}" data-fancybox="gallery" class="image"><img
+            src="{% static 'blog/img/gallery-4.jpg' %}" alt="..." class="img-fluid">
+          <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
+        </a></div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

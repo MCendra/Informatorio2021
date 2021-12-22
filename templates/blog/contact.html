@@ -1,0 +1,39 @@
+{% extends './base.html' %}
+{% load static i18n %}
+
+{% block content %}
+<section>
+    <div class="container my-3">
+        <h2>Contactarnos</h2>
+        <form method="POST" action="#">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="fname">Nombre</label>
+                    <input type="text" class="form-control" id="fname" name="fname" aria-describedby="fname">
+                    <small id="emailHelp" class="form-text text-muted">Ingresa tu nombre completo</small>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="lname">Apellido</label>
+                    <input type="text" class="form-control" id="lname" name="lname" aria-describedby="lname">
+                    <small id="emailHelp" class="form-text text-muted">Ingresa tu apellido</small>
+                </div>
+            </div>
+
+                <div class="form-group">
+                    <label for="email">Direccion de Correo</label>
+                    <input type="email" class="form-control" id="email" name='email' aria-describedby="emailHelp">
+                    <small id="emailHelp" class="form-text text-muted">Ingresa tu direccion de email.</small>
+                </div>
+
+            <div class="form-group">
+                <label for="phone">¿En que podemos ayudarte?</label>
+                <textarea class="form-control" name="content" id="content" cols="30" rows="5"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+</section>
+{% endblock %}
