@@ -86,6 +86,9 @@ class Comment(models.Model):
     def __str__(self):
         return self.user
 
+    def get_delete_comment(self):
+        return reverse("comment_delete", kwargs={"pk": self.pk})
+
 
 class Newsletter(models.Model):
 

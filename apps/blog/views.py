@@ -13,14 +13,14 @@ from django.views.generic import (
 )
 from apps.accounts.models import Author
 from apps.blog.forms import CommentForm, PostForm
-from apps.blog.models import Category, Newsletter, Post
+from apps.blog.models import Category, Newsletter, Post, Comment
 
 # Create your views here.
 class IndexView(View):
     def get(self, request, *args, **kwargs):
         featured_posts = Post.objects.filter(featured=True)[0:3]
         if self.request.user.is_authenticated:
-            nofeatured_posts = Post.objects.filter(featured=False).order_by("-timestamp")[0:3]
+            nofeatured_posts = Post.objects.filter(featured=False).filter(author=self.request.user.author).order_by("-timestamp")[0:3]
         else:
             nofeatured_posts = False
         latest_posts = Post.objects.order_by("-timestamp")[0:3]
@@ -116,3 +116,9 @@ class PolicityView(TemplateView):
 
 class ContactView(TemplateView):
     template_name = "blog/contact.html"
+
+class CommentDeleteView(DeleteView):
+    model = Comment
+    template_name = "blog/comment_delete.html"
+    success_url = reverse_lazy("index")
+

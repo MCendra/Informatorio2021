@@ -25,4 +25,6 @@ urlpatterns = [
         login_required(views.PostDeleteView.as_view()),
         name="post_delete",
     ),
+    path('comment/delete/<pk>', views.CommentDeleteView.as_view(), name="comment_delete"),
+
 ]
