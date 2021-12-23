@@ -7,7 +7,7 @@ Integrantes:
   * Alejandro Funes
   * Mariano Cendra
 
-Proyecto: Blog (Tema: Los 17 Objetivos de Desarrollo Sustentable)
+Proyecto: Blog (Tema: Los 17 Objetivos de Desarrollo Sostenible)
 
 # Sistema
 
