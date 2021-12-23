@@ -19,12 +19,12 @@ Proyecto: Blog (Tema: Los 17 Objetivos de Desarrollo Sostenible)
 
 Dependencias:
 
-  celery = 5.2.1
-  Django = 3.1
-  Pillow = 8.4.0
-  django-crispy-forms = 1.13.0
-  django-storages = 1.12.3
-  django-tinymce = 3.4.0
+  - celery = 5.2.1
+  - Django = 3.1
+  - Pillow = 8.4.0
+  - django-crispy-forms = 1.13.0
+  - django-storages = 1.12.3
+  - django-tinymce = 3.4.0
   
   Instalacion automatica de dependencias
   
@@ -48,7 +48,7 @@ Ejecutar:
 
  Datos de acceso:
  
- Cuenta Propietario contraseña informatorio (Perfil de superusuario)
- Cuenta Mariano contraseña informatorio (Perfil de Blog Admin)
- Cuenta Alejandro contraseña informatorio (Perfil de Writer)
- Cuenta Usuario contraseña informatorio (Perfil de Reader)
+ - Cuenta Propietario contraseña informatorio (Perfil de superusuario)
+ - Cuenta Mariano contraseña informatorio (Perfil de Blog Admin)
+ - Cuenta Alejandro contraseña informatorio (Perfil de Writer)
+ - Cuenta Usuario contraseña informatorio (Perfil de Reader)
