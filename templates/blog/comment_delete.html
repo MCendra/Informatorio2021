@@ -1,0 +1,28 @@
+{% extends './base.html' %}
+{% load static i18n crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <main>
+        <div class="row heading heading-icon">
+            <h3>¿Estás seguro de que quieres eliminar este comentario?</h3>
+        </div>
+        <ul class="row">
+        <li class="col-12 col-md-6 col-lg-3">
+            <div class="cnt-block equal-hight" style="height: 500px;">
+                <figure><img src="{{ comment.user.picture.url }}" alt="..." class="img-fluid rounded-circle"></figure>
+                <h4>{{ comment.post.title }}</h4>
+                <p>Escrito por: {{ comment.user }}</p>
+                <p>Hace: {{ comment.timestamp|timesince }}</p>
+                <div class="comment-body">
+                    <p>{{ comment.content|safe }}</p>
+                </div>
+            </div>
+        </li>
+        </ul>
+        <form method="post" action="{% url 'comment_delete' comment.pk %}">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-outline-secondary" value="Confirmar">
+        </form>
+    </main>
+</div>
+{% endblock content %}

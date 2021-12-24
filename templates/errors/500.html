@@ -1,0 +1,20 @@
+{% extends '../blog/base.html' %}
+{% load static i18n %}
+{% block content %}
+<section>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <h2 class="h3"><em>Ups! Ha ocurrido un error inesperado.</em></h2>
+          <div class="blockquote">
+            <blockquote>Si es la primera vez que inicias el Blog, recuerda que debes ingresar a la página
+                de <a href="{% url 'admin' %}">Administradores</a> y crear una entrada o bien los grupos y usuarios para su funcionamiento.
+                Si es un error no contemplado te pedimos las disculpas del caso y nos informes a traves de nuestro repositorio.
+            </blockquote>
+            <footer class="blockquote-footer">Gracias por comprender!</footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

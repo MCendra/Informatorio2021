@@ -1,0 +1,20 @@
+{% extends '../blog/base.html' %}
+{% load static i18n %}
+{% block content %}
+{% if not user.is_authenticated %}
+    <meta http-equiv="REFRESH" content="5;url={% url 'index' %}">
+{% endif %}
+<section>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <h2 class="h3"><em>Has cerrado tu cuenta!</em></h2>
+          <div class="blockquote">
+            <blockquote>Presiona <a href="{% url 'login'%}">aquí</a> para volver a identificarte.</blockquote>
+            <footer class="blockquote-footer"> O espera... y te llevamos a nuestra página principal</footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
